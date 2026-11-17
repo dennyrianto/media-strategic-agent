@@ -1,0 +1,8 @@
+{
+  "name": "Remix Media Strategic Test v1",
+  "description": "An advanced AI-powered media strategy platform acting as a dynamic co-pilot for media planners.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

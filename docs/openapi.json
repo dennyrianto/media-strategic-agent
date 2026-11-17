@@ -1,0 +1,1612 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Media Strategic Suite API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Api Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/analyze-brief": {
+      "post": {
+        "summary": "Analyze Brief",
+        "operationId": "analyze_brief_api_gemini_analyze_brief_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeBriefRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeBriefResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/market-dashboard": {
+      "post": {
+        "summary": "Market Dashboard",
+        "operationId": "market_dashboard_api_gemini_market_dashboard_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketDashboardRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketDashboard"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/step-content": {
+      "post": {
+        "summary": "Step Content",
+        "operationId": "step_content_api_gemini_step_content_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StepContentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StepContentResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/personas": {
+      "post": {
+        "summary": "Personas",
+        "operationId": "personas_api_gemini_personas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonasRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonasResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/moments": {
+      "post": {
+        "summary": "Moments",
+        "operationId": "moments_api_gemini_moments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MomentsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MomentsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/big-ideas": {
+      "post": {
+        "summary": "Big Ideas",
+        "operationId": "big_ideas_api_gemini_big_ideas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BigIdeasRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BigIdeasResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gemini/media-strategy": {
+      "post": {
+        "summary": "Media Strategy",
+        "operationId": "media_strategy_api_gemini_media_strategy_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaStrategyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaStrategyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Acronym": {
+        "properties": {
+          "word": {
+            "type": "string",
+            "title": "Word"
+          },
+          "meaning": {
+            "type": "string",
+            "title": "Meaning"
+          }
+        },
+        "type": "object",
+        "required": [
+          "word",
+          "meaning"
+        ],
+        "title": "Acronym"
+      },
+      "AnalyzeBriefRequest": {
+        "properties": {
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "fileBase64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filebase64"
+          },
+          "mimeType": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mimetype"
+          }
+        },
+        "type": "object",
+        "title": "AnalyzeBriefRequest"
+      },
+      "AnalyzeBriefResponse": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "structured": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Structured"
+          },
+          "suggestions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggestions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary",
+          "structured",
+          "suggestions"
+        ],
+        "title": "AnalyzeBriefResponse"
+      },
+      "Benchmark": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "default": ""
+          },
+          "marketShare": {
+            "type": "string",
+            "title": "Marketshare",
+            "default": ""
+          },
+          "mediaSpend": {
+            "type": "string",
+            "title": "Mediaspend",
+            "default": ""
+          },
+          "digitalMaturity": {
+            "type": "string",
+            "title": "Digitalmaturity",
+            "default": ""
+          },
+          "sentiment": {
+            "type": "string",
+            "title": "Sentiment",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "Benchmark"
+      },
+      "BigIdea": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "tagline": {
+            "type": "string",
+            "title": "Tagline"
+          },
+          "hook": {
+            "type": "string",
+            "title": "Hook"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          },
+          "culturalFit": {
+            "type": "string",
+            "title": "Culturalfit"
+          },
+          "acronym": {
+            "$ref": "#/components/schemas/Acronym"
+          },
+          "funnelStrategy": {
+            "items": {
+              "$ref": "#/components/schemas/FunnelStage"
+            },
+            "type": "array",
+            "title": "Funnelstrategy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "tagline",
+          "hook",
+          "rationale",
+          "culturalFit",
+          "acronym",
+          "funnelStrategy"
+        ],
+        "title": "BigIdea"
+      },
+      "BigIdeasRequest": {
+        "properties": {
+          "brief": {
+            "$ref": "#/components/schemas/MediaBrief"
+          },
+          "marketIntelligence": {
+            "type": "string",
+            "title": "Marketintelligence",
+            "default": ""
+          },
+          "personas": {
+            "items": {
+              "$ref": "#/components/schemas/PersonaProfile"
+            },
+            "type": "array",
+            "title": "Personas"
+          },
+          "moments": {
+            "items": {
+              "$ref": "#/components/schemas/Moment"
+            },
+            "type": "array",
+            "title": "Moments"
+          }
+        },
+        "type": "object",
+        "title": "BigIdeasRequest"
+      },
+      "BigIdeasResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "ideas": {
+            "items": {
+              "$ref": "#/components/schemas/BigIdea"
+            },
+            "type": "array",
+            "title": "Ideas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "ideas"
+        ],
+        "title": "BigIdeasResponse"
+      },
+      "BudgetAllocation": {
+        "properties": {
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "percentage": {
+            "type": "number",
+            "title": "Percentage"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "channel",
+          "percentage",
+          "rationale"
+        ],
+        "title": "BudgetAllocation"
+      },
+      "CampaignPhase": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "timing": {
+            "type": "string",
+            "title": "Timing"
+          },
+          "objective": {
+            "type": "string",
+            "title": "Objective"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "timing",
+          "objective"
+        ],
+        "title": "CampaignPhase"
+      },
+      "ChannelActivity": {
+        "properties": {
+          "phaseName": {
+            "type": "string",
+            "title": "Phasename"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "intensity": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "title": "Intensity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "phaseName",
+          "action",
+          "intensity"
+        ],
+        "title": "ChannelActivity"
+      },
+      "ChannelCategoryStrategy": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "Conventional",
+              "Digital",
+              "Activation"
+            ],
+            "title": "Category"
+          },
+          "strategy": {
+            "type": "string",
+            "title": "Strategy"
+          },
+          "approach": {
+            "type": "string",
+            "title": "Approach"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          },
+          "tactics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tactics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "strategy",
+          "approach",
+          "explanation",
+          "tactics"
+        ],
+        "title": "ChannelCategoryStrategy"
+      },
+      "ChannelFlight": {
+        "properties": {
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "activities": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelActivity"
+            },
+            "type": "array",
+            "title": "Activities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "channel",
+          "activities"
+        ],
+        "title": "ChannelFlight"
+      },
+      "FlightPlan": {
+        "properties": {
+          "phases": {
+            "items": {
+              "$ref": "#/components/schemas/CampaignPhase"
+            },
+            "type": "array",
+            "title": "Phases"
+          },
+          "channels": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelFlight"
+            },
+            "type": "array",
+            "title": "Channels"
+          }
+        },
+        "type": "object",
+        "required": [
+          "phases",
+          "channels"
+        ],
+        "title": "FlightPlan"
+      },
+      "FunnelStage": {
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "Awareness",
+              "Consideration",
+              "Trial",
+              "Conversion"
+            ],
+            "title": "Role"
+          },
+          "strategy": {
+            "type": "string",
+            "title": "Strategy"
+          },
+          "touchpoints": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Touchpoints"
+          }
+        },
+        "type": "object",
+        "required": [
+          "role",
+          "strategy",
+          "touchpoints"
+        ],
+        "title": "FunnelStage"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LocalNuance": {
+        "properties": {
+          "aspect": {
+            "type": "string",
+            "title": "Aspect"
+          },
+          "insight": {
+            "type": "string",
+            "title": "Insight"
+          }
+        },
+        "type": "object",
+        "required": [
+          "aspect",
+          "insight"
+        ],
+        "title": "LocalNuance"
+      },
+      "MarketDashboard": {
+        "properties": {
+          "sentiment": {
+            "type": "number",
+            "title": "Sentiment",
+            "description": "Score 0-100",
+            "default": 0
+          },
+          "growth": {
+            "type": "string",
+            "title": "Growth",
+            "description": "e.g. +5.4% CAGR",
+            "default": ""
+          },
+          "keyInsights": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keyinsights",
+            "description": "3 strategic bullet points summary"
+          },
+          "channelMix": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Channelmix",
+            "description": "Top 3 media channels (e.g. TikTok, CTV)"
+          },
+          "audienceSegments": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Audiencesegments",
+            "description": "Top 3 audience micro-segments (e.g. 'Eco-conscious Gen Z')"
+          },
+          "geoFocus": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Geofocus",
+            "description": "Key geographic markets (e.g. 'Urban Centers', 'South America')"
+          },
+          "benchmarking": {
+            "items": {
+              "$ref": "#/components/schemas/Benchmark"
+            },
+            "type": "array",
+            "title": "Benchmarking"
+          },
+          "swot": {
+            "$ref": "#/components/schemas/Swot"
+          },
+          "trends": {
+            "items": {
+              "$ref": "#/components/schemas/Trend"
+            },
+            "type": "array",
+            "title": "Trends"
+          }
+        },
+        "type": "object",
+        "title": "MarketDashboard"
+      },
+      "MarketDashboardRequest": {
+        "properties": {
+          "rawIntel": {
+            "type": "string",
+            "title": "Rawintel",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "MarketDashboardRequest"
+      },
+      "MediaBrief": {
+        "properties": {
+          "brandName": {
+            "type": "string",
+            "title": "Brandname",
+            "default": ""
+          },
+          "industry": {
+            "type": "string",
+            "title": "Industry",
+            "default": ""
+          },
+          "product": {
+            "type": "string",
+            "title": "Product",
+            "default": ""
+          },
+          "targetAudience": {
+            "type": "string",
+            "title": "Targetaudience",
+            "default": ""
+          },
+          "objectives": {
+            "type": "string",
+            "title": "Objectives",
+            "default": ""
+          },
+          "budget": {
+            "type": "string",
+            "title": "Budget",
+            "default": ""
+          },
+          "timeline": {
+            "type": "string",
+            "title": "Timeline",
+            "default": ""
+          },
+          "additionalNotes": {
+            "type": "string",
+            "title": "Additionalnotes",
+            "default": ""
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "isConfirmed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isconfirmed"
+          },
+          "suggestions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggestions"
+          }
+        },
+        "type": "object",
+        "title": "MediaBrief"
+      },
+      "MediaChannelTactic": {
+        "properties": {
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "tacticDescription": {
+            "type": "string",
+            "title": "Tacticdescription"
+          },
+          "contentThemes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Contentthemes"
+          },
+          "formats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Formats"
+          },
+          "bestPractices": {
+            "type": "string",
+            "title": "Bestpractices"
+          },
+          "targeting": {
+            "$ref": "#/components/schemas/Targeting"
+          }
+        },
+        "type": "object",
+        "required": [
+          "channel",
+          "role",
+          "tacticDescription",
+          "contentThemes",
+          "formats",
+          "bestPractices",
+          "targeting"
+        ],
+        "title": "MediaChannelTactic"
+      },
+      "MediaFunnelStage": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "Awareness",
+              "Consideration",
+              "Trial",
+              "Conversion"
+            ],
+            "title": "Stage"
+          },
+          "objective": {
+            "type": "string",
+            "title": "Objective"
+          },
+          "kpi": {
+            "type": "string",
+            "title": "Kpi"
+          },
+          "channelStrategies": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelCategoryStrategy"
+            },
+            "type": "array",
+            "title": "Channelstrategies"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "objective",
+          "kpi",
+          "channelStrategies"
+        ],
+        "title": "MediaFunnelStage"
+      },
+      "MediaStrategyRequest": {
+        "properties": {
+          "brief": {
+            "$ref": "#/components/schemas/MediaBrief"
+          },
+          "personas": {
+            "items": {
+              "$ref": "#/components/schemas/PersonaProfile"
+            },
+            "type": "array",
+            "title": "Personas"
+          },
+          "marketIntel": {
+            "type": "string",
+            "title": "Marketintel",
+            "default": ""
+          },
+          "moments": {
+            "items": {
+              "$ref": "#/components/schemas/Moment"
+            },
+            "type": "array",
+            "title": "Moments"
+          },
+          "bigIdeas": {
+            "items": {
+              "$ref": "#/components/schemas/BigIdea"
+            },
+            "type": "array",
+            "title": "Bigideas"
+          }
+        },
+        "type": "object",
+        "title": "MediaStrategyRequest"
+      },
+      "MediaStrategyResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "strategy": {
+            "$ref": "#/components/schemas/MediaStrategyResult"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "strategy"
+        ],
+        "title": "MediaStrategyResponse"
+      },
+      "MediaStrategyResult": {
+        "properties": {
+          "personaStrategies": {
+            "items": {
+              "$ref": "#/components/schemas/PersonaMediaStrategy"
+            },
+            "type": "array",
+            "title": "Personastrategies"
+          },
+          "budgetAllocation": {
+            "items": {
+              "$ref": "#/components/schemas/BudgetAllocation"
+            },
+            "type": "array",
+            "title": "Budgetallocation"
+          },
+          "tacticalBlueprint": {
+            "items": {
+              "$ref": "#/components/schemas/MediaChannelTactic"
+            },
+            "type": "array",
+            "title": "Tacticalblueprint"
+          },
+          "localNuances": {
+            "items": {
+              "$ref": "#/components/schemas/LocalNuance"
+            },
+            "type": "array",
+            "title": "Localnuances"
+          },
+          "flightPlan": {
+            "$ref": "#/components/schemas/FlightPlan"
+          }
+        },
+        "type": "object",
+        "required": [
+          "personaStrategies",
+          "budgetAllocation",
+          "tacticalBlueprint",
+          "localNuances",
+          "flightPlan"
+        ],
+        "title": "MediaStrategyResult"
+      },
+      "Moment": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "default": ""
+          },
+          "month": {
+            "type": "string",
+            "title": "Month",
+            "description": "Just the month name (e.g. 'January')"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "The Occasion/Theme (e.g. 'Chinese New Year')"
+          },
+          "date": {
+            "type": "string",
+            "title": "Date",
+            "description": "Specific tentative date (e.g. 'Feb 17')"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Cultural",
+              "Seasonal",
+              "Industry",
+              "Sporting",
+              "Trend",
+              "Other"
+            ],
+            "title": "Type"
+          },
+          "relevanceScore": {
+            "type": "number",
+            "title": "Relevancescore",
+            "description": "0 to 100"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "activationIdea": {
+            "type": "string",
+            "title": "Activationidea",
+            "description": "The Campaign Idea for this moment"
+          },
+          "contentFocus": {
+            "type": "string",
+            "title": "Contentfocus",
+            "description": "Key themes or types of content to produce"
+          },
+          "brandingIdea": {
+            "type": "string",
+            "title": "Brandingidea",
+            "description": "A specific branding angle or tagline direction"
+          }
+        },
+        "type": "object",
+        "required": [
+          "month",
+          "title",
+          "date",
+          "type",
+          "relevanceScore",
+          "description",
+          "activationIdea",
+          "contentFocus",
+          "brandingIdea"
+        ],
+        "title": "Moment"
+      },
+      "MomentsRequest": {
+        "properties": {
+          "brief": {
+            "$ref": "#/components/schemas/MediaBrief"
+          },
+          "marketIntelligence": {
+            "type": "string",
+            "title": "Marketintelligence",
+            "default": ""
+          },
+          "personaSummary": {
+            "type": "string",
+            "title": "Personasummary",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "MomentsRequest"
+      },
+      "MomentsResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "moments": {
+            "items": {
+              "$ref": "#/components/schemas/Moment"
+            },
+            "type": "array",
+            "title": "Moments"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "moments"
+        ],
+        "title": "MomentsResponse"
+      },
+      "PersonaMediaStrategy": {
+        "properties": {
+          "personaName": {
+            "type": "string",
+            "title": "Personaname"
+          },
+          "overview": {
+            "type": "string",
+            "title": "Overview"
+          },
+          "matchedBigIdea": {
+            "type": "string",
+            "title": "Matchedbigidea"
+          },
+          "matchedMoments": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matchedmoments"
+          },
+          "funnelBreakdown": {
+            "items": {
+              "$ref": "#/components/schemas/MediaFunnelStage"
+            },
+            "type": "array",
+            "title": "Funnelbreakdown"
+          },
+          "programmaticIdeas": {
+            "items": {
+              "$ref": "#/components/schemas/ProgrammaticIdea"
+            },
+            "type": "array",
+            "title": "Programmaticideas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "personaName",
+          "overview",
+          "matchedBigIdea",
+          "matchedMoments",
+          "funnelBreakdown",
+          "programmaticIdeas"
+        ],
+        "title": "PersonaMediaStrategy"
+      },
+      "PersonaProfile": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "default": ""
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "age": {
+            "type": "string",
+            "title": "Age"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          },
+          "microSegmentation": {
+            "type": "string",
+            "title": "Microsegmentation"
+          },
+          "demographics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Demographics"
+          },
+          "psychographics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Psychographics"
+          },
+          "behaviors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Behaviors"
+          },
+          "digitalJourney": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Digitaljourney"
+          },
+          "offlineJourney": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Offlinejourney"
+          },
+          "mediaHabits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Mediahabits"
+          },
+          "painPoints": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Painpoints"
+          },
+          "drivers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Drivers"
+          },
+          "brandAffinity": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Brandaffinity"
+          },
+          "visualDescription": {
+            "type": "string",
+            "title": "Visualdescription",
+            "default": ""
+          },
+          "imageUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imageurl"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "role",
+          "age",
+          "quote",
+          "microSegmentation",
+          "psychographics",
+          "digitalJourney",
+          "drivers",
+          "brandAffinity"
+        ],
+        "title": "PersonaProfile",
+        "description": "Draft + the portrait data-URI added by the server."
+      },
+      "PersonasRequest": {
+        "properties": {
+          "brief": {
+            "$ref": "#/components/schemas/MediaBrief"
+          },
+          "marketIntelligence": {
+            "type": "string",
+            "title": "Marketintelligence",
+            "default": ""
+          },
+          "additionalFiles": {
+            "items": {
+              "$ref": "#/components/schemas/UploadedFile"
+            },
+            "type": "array",
+            "title": "Additionalfiles"
+          },
+          "refinementQuery": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refinementquery"
+          }
+        },
+        "type": "object",
+        "title": "PersonasRequest"
+      },
+      "PersonasResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "personas": {
+            "items": {
+              "$ref": "#/components/schemas/PersonaProfile"
+            },
+            "type": "array",
+            "title": "Personas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "personas"
+        ],
+        "title": "PersonasResponse"
+      },
+      "ProgrammaticIdea": {
+        "properties": {
+          "conceptName": {
+            "type": "string",
+            "title": "Conceptname"
+          },
+          "dataTriggers": {
+            "type": "string",
+            "title": "Datatriggers"
+          },
+          "momentConnection": {
+            "type": "string",
+            "title": "Momentconnection"
+          },
+          "creativeExecution": {
+            "type": "string",
+            "title": "Creativeexecution"
+          },
+          "realLifeApplication": {
+            "type": "string",
+            "title": "Reallifeapplication"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conceptName",
+          "dataTriggers",
+          "momentConnection",
+          "creativeExecution",
+          "realLifeApplication"
+        ],
+        "title": "ProgrammaticIdea"
+      },
+      "StepContentRequest": {
+        "properties": {
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "brief": {
+            "$ref": "#/components/schemas/MediaBrief"
+          },
+          "previousResults": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Previousresults"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step"
+        ],
+        "title": "StepContentRequest"
+      },
+      "StepContentResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "StepContentResponse"
+      },
+      "Swot": {
+        "properties": {
+          "strengths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strengths"
+          },
+          "weaknesses": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Weaknesses"
+          },
+          "opportunities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Opportunities"
+          },
+          "threats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Threats"
+          }
+        },
+        "type": "object",
+        "title": "Swot"
+      },
+      "Targeting": {
+        "properties": {
+          "demographics": {
+            "type": "string",
+            "title": "Demographics"
+          },
+          "affinities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Affinities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "demographics",
+          "affinities"
+        ],
+        "title": "Targeting"
+      },
+      "Trend": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "Trend"
+      },
+      "UploadedFile": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "default": ""
+          },
+          "base64": {
+            "type": "string",
+            "title": "Base64",
+            "default": ""
+          },
+          "mimeType": {
+            "type": "string",
+            "title": "Mimetype",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "UploadedFile"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
