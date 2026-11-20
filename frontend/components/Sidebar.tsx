@@ -11,7 +11,9 @@ import {
   CheckCircle2,
   Loader2,
   RotateCcw,
-  AlertTriangle
+  AlertTriangle,
+  Check,
+  Sparkles
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -54,57 +56,73 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <div className="w-80 h-full bg-white border-r border-slate-200 flex flex-col shadow-xl z-20">
-      <div className="p-6 border-b border-slate-100">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent tracking-tighter">
-          MEDIA STRATEGIC
-        </h1>
-        <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-semibold">Suite</p>
+    <div className="w-72 h-full bg-white border-r border-slate-200/80 flex flex-col z-20">
+      <div className="px-6 pt-7 pb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center shadow-md shadow-indigo-500/30">
+            <Sparkles size={18} className="text-white" />
+          </div>
+          <div>
+            <h1 className="font-display text-lg font-bold text-slate-900 leading-none">Media Strategix</h1>
+            <p className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-[0.18em] font-semibold">Strategy Suite</p>
+          </div>
+        </div>
       </div>
-      
-      <div className="flex-1 overflow-y-auto py-6">
-        <div className="space-y-1.5 px-4">
-          {steps.map((step) => {
-            const Icon = step.icon;
-            const isActive = currentStep === step.id;
-            const isCompleted = maxStepReached >= step.id;
-            const isLocked = !isCompleted && step.id !== AppStep.BriefIngestion && step.id > maxStepReached + 1;
 
-            return (
-              <button
-                key={step.id}
-                onClick={() => !isLocked && setStep(step.id)}
-                disabled={isLocked}
-                className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 text-left group relative overflow-hidden
-                  ${isActive 
-                    ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100 translate-x-1' 
-                    : isLocked 
-                      ? 'text-slate-300 cursor-not-allowed' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 hover:shadow-sm hover:translate-x-1'
-                  }
-                `}
-              >
-                {isActive && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-l-xl"></div>
-                )}
-                <Icon size={20} className={`shrink-0 ${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'}`} />
-                <span className={`font-kufam text-sm tracking-wide ${isActive ? 'font-bold' : 'font-medium'}`}>
-                  {step.id}. {step.label}
-                </span>
-                
-                {isCompleted && !isActive && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></div>
-                )}
-              </button>
-            );
-          })}
+      <div className="flex-1 overflow-y-auto px-4 pb-6">
+        <p className="px-3 mb-3 text-[10px] uppercase tracking-[0.18em] font-bold text-slate-400">Workflow</p>
+        <div className="relative">
+          {/* vertical connector */}
+          <div className="absolute left-[27px] top-6 bottom-6 w-px bg-slate-200" aria-hidden="true"></div>
+          <div className="space-y-1 relative">
+            {steps.map((step) => {
+              const Icon = step.icon;
+              const isActive = currentStep === step.id;
+              const isCompleted = maxStepReached >= step.id;
+              const isLocked = !isCompleted && step.id !== AppStep.BriefIngestion && step.id > maxStepReached + 1;
+              const isDone = isCompleted && !isActive && step.id < maxStepReached;
+
+              return (
+                <button
+                  key={step.id}
+                  onClick={() => !isLocked && setStep(step.id)}
+                  disabled={isLocked}
+                  className={`w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition-colors duration-200 text-left group
+                    ${isActive
+                      ? 'bg-indigo-50 text-indigo-800'
+                      : isLocked
+                        ? 'text-slate-300 cursor-not-allowed'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }
+                  `}
+                >
+                  <span
+                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ring-4 ring-white transition-colors
+                      ${isActive
+                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30'
+                        : isDone
+                          ? 'bg-emerald-500 text-white'
+                          : isLocked
+                            ? 'bg-slate-100 text-slate-300'
+                            : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
+                      }`}
+                  >
+                    {isDone ? <Check size={15} strokeWidth={3} /> : isActive ? <Icon size={15} /> : step.id}
+                  </span>
+                  <span className={`text-[13px] leading-snug ${isActive ? 'font-bold' : 'font-semibold'}`}>
+                    {step.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       {/* Auto-Save Status & Session Persistence Controls */}
-      <div className="p-4 border-t border-slate-100 bg-slate-50/70 space-y-3">
+      <div className="p-4 border-t border-slate-200/80 bg-slate-50/60 space-y-3">
         {/* Persistence Status Pill */}
-        <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-white border border-slate-200/80 shadow-xs">
+        <div className="flex items-center justify-between px-2 py-1.5 rounded-xl bg-white border border-slate-200/80 shadow-xs">
           <div className="flex items-center gap-2 text-xs">
             {saveStatus === 'saving' ? (
               <>
@@ -167,7 +185,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* System Active Badge */}
         <div className="flex items-center gap-3 px-2 pt-1">
-          <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center border border-indigo-200 shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center shrink-0">
             <span className="text-xs font-bold text-indigo-700">AI</span>
           </div>
           <div>

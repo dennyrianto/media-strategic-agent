@@ -161,8 +161,16 @@ def _prior_text(previous: dict[str, dict], step: int) -> str | None:
     return raw[:STEP_CONTEXT_CHARS] if isinstance(raw, str) and raw else None
 
 
-def step_content_prompt(step: int, brief: MediaBrief, previous: dict[str, dict]) -> tuple[str, bool]:
-    """Returns (full prompt, use_google_search)."""
+def step_content_prompt(
+    step: int, brief: MediaBrief, previous: dict[str, dict], *, search: bool = True
+) -> tuple[str, bool]:
+    """Returns (full prompt, use_google_search).
+
+    search=False builds the no-live-search variant of the market intelligence
+    prompt (used when search quota is exhausted or search is switched off).
+    It forbids invented statistics and citations, which the search-grounded
+    wording would otherwise encourage.
+    """
     context = f"""
       You are Stratagem AI, an elite media strategy director. 
       Current Context:
@@ -176,13 +184,24 @@ def step_content_prompt(step: int, brief: MediaBrief, previous: dict[str, dict])
         context += f"\n\nBig Idea: {t}..."
 
     if step == STEP_MARKET_INTELLIGENCE:
+        if search:
+            search_line = "Use Real-Time Google Search to synthesize the latest data, trends, and reports."
+            source_block = """**MANDATORY SOURCE INTEGRATION**:
+        - You MUST incorporate data and insights from reliable industry sources such as **Kantar, Nielsen, Statista, Gartner, Mintel, Euromonitor, or regional equivalents**.
+        - **Explicitly cite the source names** within the analysis text."""
+            sources_line = "(List the key sources used)."
+        else:
+            search_line = "Live Google Search is NOT available for this run. Work only from your background knowledge."
+            source_block = """**SOURCE INTEGRITY (no live search available)**:
+        - Do NOT invent statistics, quotes, report titles or source citations.
+        - Name industry sources (Kantar, Nielsen, Statista, etc.) only as general places to look, never as the origin of a specific number you cannot verify.
+        - Where reliable data is missing, say so, and label every figure as an approximate estimate."""
+            sources_line = "(State that no live sources were consulted. List only general industry references worth checking.)"
         task = f"""
         Perform a **Deep Market & Competitive Intelligence Analysis** for **{brief.brand_name}** in the **{brief.industry}** sector.
-        Use Real-Time Google Search to synthesize the latest data, trends, and reports.
+        {search_line}
 
-        **MANDATORY SOURCE INTEGRATION**:
-        - You MUST incorporate data and insights from reliable industry sources such as **Kantar, Nielsen, Statista, Gartner, Mintel, Euromonitor, or regional equivalents**.
-        - **Explicitly cite the source names** within the analysis text.
+        {source_block}
 
         **CRITICAL OUTPUT REQUIREMENT**:
         - Return the result ONLY as a clean, professionally formatted **MARKDOWN** document.
@@ -231,9 +250,9 @@ def step_content_prompt(step: int, brief: MediaBrief, previous: dict[str, dict])
         (Create a Markdown Table comparing {brief.brand_name} vs Competitors on Market Position, Audience, and Digital Maturity).
         
         ## 8. Data Sources
-        (List the key sources used).
+        {sources_line}
         """
-        return f"{context}\n\nTask: {task}", True
+        return f"{context}\n\nTask: {task}", search
 
     return f"{context}\n\nTask: Analyze the brief and provide strategic insights.", False
 
@@ -391,5 +410,7 @@ def media_strategy_prompt(req: MediaStrategyRequest) -> str:
       - **Big Ideas**: {big_ideas}
       - **Activation Moments**: {moments}
 
+    #   Recommended media KPI by funnel
+    
       Return strictly JSON matching the required schema. Ensure flightPlan and targeting are fully populated.
     """

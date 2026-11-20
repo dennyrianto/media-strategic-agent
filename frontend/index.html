@@ -8,35 +8,81 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kufam:ital,wght@0,400..900;1,400..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
       rel="stylesheet"
     />
+    <script>
+      /*
+       * Theme: the whole app is restyled from here.
+       * Existing `indigo-*`, `blue-*` and `slate-*` classes in the components
+       * now resolve to the palettes below, so no component markup had to change.
+       */
+      const accent = {
+        50: '#f4f3ff', 100: '#eae8ff', 200: '#d6d2ff', 300: '#b9b1ff', 400: '#9786fb',
+        500: '#7a62f3', 600: '#6445e6', 700: '#5435c9', 800: '#452ca3', 900: '#392a80', 950: '#231a4f',
+      };
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+              display: ['"Bricolage Grotesque"', '"Plus Jakarta Sans"', 'ui-sans-serif', 'sans-serif'],
+            },
+            colors: {
+              indigo: accent,
+              blue: accent,
+              slate: {
+                50: '#f8f8fb', 100: '#f1f0f6', 200: '#e5e4ed', 300: '#d0cfdb', 400: '#9b9aab',
+                500: '#6f6e80', 600: '#56556a', 700: '#42414f', 800: '#2b2a37', 900: '#191821', 950: '#0e0d14',
+              },
+            },
+            boxShadow: {
+              xs: '0 1px 2px 0 rgb(25 24 33 / 0.05)',
+              sm: '0 1px 3px 0 rgb(25 24 33 / 0.06), 0 1px 2px -1px rgb(25 24 33 / 0.05)',
+              md: '0 4px 12px -2px rgb(25 24 33 / 0.08), 0 2px 4px -2px rgb(25 24 33 / 0.05)',
+              lg: '0 12px 24px -6px rgb(25 24 33 / 0.10), 0 4px 8px -4px rgb(25 24 33 / 0.06)',
+              xl: '0 20px 40px -10px rgb(25 24 33 / 0.14), 0 8px 16px -8px rgb(25 24 33 / 0.08)',
+            },
+          },
+        },
+      };
+    </script>
     <style>
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+        letter-spacing: -0.003em;
       }
-      .font-kufam {
-        font-family: 'Kufam', sans-serif;
+      .font-display {
+        font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+        letter-spacing: -0.02em;
       }
-      /* Custom scrollbar for a sleeker look */
+      /* Slimmer, softer scrollbars */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #d0cfdb transparent;
+      }
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f5f9;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
+        background: #d0cfdb;
+        border-radius: 999px;
+        border: 2px solid transparent;
+        background-clip: content-box;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+        background: #9b9aab;
+        background-clip: content-box;
       }
     </style>
-</head>
+  </head>
   <body class="bg-slate-50 text-slate-900 antialiased overflow-hidden">
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>

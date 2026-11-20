@@ -148,7 +148,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-900 overflow-hidden font-inter selection:bg-blue-100 selection:text-blue-900">
+    <div className="flex h-screen bg-slate-50 text-slate-900 overflow-hidden font-inter selection:bg-indigo-100 selection:text-indigo-900">
       <Sidebar 
         currentStep={state.currentStep} 
         setStep={setStep} 
@@ -160,15 +160,15 @@ const App: React.FC = () => {
       />
       
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-        {/* Dynamic Background Elements - Light Theme */}
+        {/* Soft background wash */}
         <div className="absolute inset-0 pointer-events-none z-0">
-           <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px]"></div>
-           <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-400/10 rounded-full blur-[100px]"></div>
+           <div className="absolute top-[-20%] right-[-10%] w-[560px] h-[560px] bg-indigo-300/15 rounded-full blur-[120px]"></div>
+           <div className="absolute bottom-[-20%] left-[-10%] w-[480px] h-[480px] bg-indigo-200/20 rounded-full blur-[120px]"></div>
         </div>
 
         {/* Restored Session Notification Banner */}
         {showRestoredBanner && (
-          <div className="z-20 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200/80 px-8 py-2.5 flex items-center justify-between text-xs text-blue-950 transition-all shadow-xs">
+          <div className="z-20 bg-indigo-50/80 backdrop-blur border-b border-indigo-100 px-8 py-2.5 flex items-center justify-between text-xs text-blue-950 transition-all shadow-xs">
             <div className="flex items-center gap-2.5">
               <span className="p-1 rounded bg-blue-100/80 text-blue-700">
                 <BookmarkCheck size={14} />

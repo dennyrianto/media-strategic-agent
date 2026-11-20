@@ -105,11 +105,44 @@ async def market_dashboard(body: MarketDashboardRequest, gemini: GeminiService =
     )
 
 
-# --- 3. step content (search-grounded market intelligence) ----------------
+# --- 3. step content (search-grounded market intelligence) ---------------
+NOTE_QUOTA = (
+    "> **Note:** Live Google Search was unavailable for this run (quota reached), so this report "
+    "is based on the AI model's general knowledge. Figures are approximate and unverified. "
+    "Re-generate later for a search-grounded version.\n\n"
+)
+NOTE_OFF = (
+    "> **Note:** Live Google Search is turned off (`SEARCH_GROUNDING=off`), so this report is "
+    "based on the AI model's general knowledge. Figures are approximate and unverified.\n\n"
+)
+
+
 @router.post("/gemini/step-content", response_model=StepContentResponse, response_model_by_alias=True)
-async def step_content(body: StepContentRequest, gemini: GeminiService = Depends(get_gemini)):
-    prompt, grounded = prompts.step_content_prompt(body.step, body.brief, body.previous_results)
-    text = await gemini.generate_text(prompt, grounded=grounded, empty_fallback="No analysis generated.")
+async def step_content(
+    body: StepContentRequest,
+    gemini: GeminiService = Depends(get_gemini),
+    settings: Settings = Depends(get_settings),
+):
+    mode = settings.search_grounding
+    args = (body.step, body.brief, body.previous_results)
+    prompt, wants_search = prompts.step_content_prompt(*args, search=(mode != "off"))
+    fallback = "No analysis generated."
+    is_market_step = body.step == prompts.STEP_MARKET_INTELLIGENCE
+
+    try:
+        text = await gemini.generate_text(prompt, grounded=wants_search, empty_fallback=fallback)
+    except GeminiError as exc:
+        # Search grounding has its own quota. If only that is exhausted, still give
+        # the user a report - clearly labelled - instead of blocking the whole workflow.
+        if not (wants_search and mode == "auto" and exc.status == 429):
+            raise
+        log.warning("Search grounding quota reached; falling back to no-search report.")
+        prompt, _ = prompts.step_content_prompt(*args, search=False)
+        text = await gemini.generate_text(prompt, grounded=False, empty_fallback=fallback)
+        return StepContentResponse(text=NOTE_QUOTA + text)
+
+    if is_market_step and mode == "off":
+        text = NOTE_OFF + text
     return StepContentResponse(text=text)
 
 

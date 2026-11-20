@@ -24,13 +24,20 @@ log = logging.getLogger("gemini")
 _FENCE_RE = re.compile(r"^```(?:json)?\s*|\s*```$", re.IGNORECASE)
 
 
-class GeminiError(Exception):
-    """Raised for any Gemini-side problem; `status` is the HTTP code to return."""
+TRANSIENT_CODES = {500, 503, 504}
 
-    def __init__(self, message: str, status: int = 502):
+
+class GeminiError(Exception):
+    """Raised for any Gemini-side problem; `status` is the HTTP code to return.
+
+    `transient` marks temporary Google-side failures that are worth retrying.
+    """
+
+    def __init__(self, message: str, status: int = 502, transient: bool = False):
         super().__init__(message)
         self.message = message
         self.status = status
+        self.transient = transient
 
 
 def text_part(text: str) -> types.Part:
@@ -88,9 +95,41 @@ class GeminiService:
     def _wrap(exc: Exception) -> GeminiError:
         if isinstance(exc, genai_errors.APIError):
             code = getattr(exc, "code", None)
-            status = 429 if code == 429 else 502
-            return GeminiError(f"Gemini API error ({code}): {exc.message}", status)
+            detail = exc.message
+            if code == 429:
+                return GeminiError(
+                    f"Gemini quota or rate limit reached (429). {detail}", status=429
+                )
+            if code in TRANSIENT_CODES:
+                return GeminiError(
+                    f"Google's Gemini service is temporarily unavailable ({code}). "
+                    f"This is usually short-lived - please try again in a moment. {detail}",
+                    status=503,
+                    transient=True,
+                )
+            return GeminiError(f"Gemini API error ({code}): {detail}", 502)
         return GeminiError(f"Gemini request failed: {exc}", 502)
+
+    async def _generate(self, **kwargs: Any):
+        """generate_content with retry/backoff for temporary Google-side errors."""
+        attempts = max(1, self.settings.gemini_max_attempts)
+        for attempt in range(1, attempts + 1):
+            try:
+                return await self.client.aio.models.generate_content(**kwargs)
+            except GeminiError:
+                raise
+            except Exception as exc:
+                err = self._wrap(exc)
+                if err.transient and attempt < attempts:
+                    delay = self.settings.gemini_retry_base_delay * 2 ** (attempt - 1)
+                    log.warning(
+                        "Gemini temporarily unavailable (attempt %d/%d); retrying in %.1fs",
+                        attempt, attempts, delay,
+                    )
+                    await asyncio.sleep(delay)
+                    continue
+                raise err from exc
+        raise AssertionError("unreachable")  # pragma: no cover
 
     # -- text -------------------------------------------------------------
     async def generate_text(
@@ -99,14 +138,9 @@ class GeminiService:
         config = types.GenerateContentConfig(
             tools=[types.Tool(google_search=types.GoogleSearch())] if grounded else None
         )
-        try:
-            resp = await self.client.aio.models.generate_content(
-                model=self.settings.gemini_model_text, contents=contents, config=config
-            )
-        except GeminiError:
-            raise
-        except Exception as exc:  # SDK / network errors
-            raise self._wrap(exc) from exc
+        resp = await self._generate(
+            model=self.settings.gemini_model_text, contents=contents, config=config
+        )
         return resp.text or empty_fallback
 
     # -- structured JSON --------------------------------------------------
@@ -121,16 +155,9 @@ class GeminiService:
         )
         last_problem = ""
         for attempt in (1, 2):
-            try:
-                resp = await self.client.aio.models.generate_content(
-                    model=self.settings.gemini_model_text,
-                    contents=contents,
-                    config=config,
-                )
-            except GeminiError:
-                raise
-            except Exception as exc:
-                raise self._wrap(exc) from exc
+            resp = await self._generate(
+                model=self.settings.gemini_model_text, contents=contents, config=config
+            )
 
             try:
                 return _parse_json(resp.text or "", schema)
