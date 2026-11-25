@@ -165,12 +165,33 @@ export interface FlightPlan {
   channels: ChannelFlight[];
 }
 
+// Content Insight: key contents of virality (bottom of step 6)
+export interface ViralContentIdea {
+  title: string;
+  concept: string;
+  hook: string;               // what stops the scroll in the first seconds
+  viralityDrivers: string[];  // why people will share / engage
+  formatAndPlatforms: string;
+  howToMake: string[];        // concrete production steps
+  targetPersona: string;
+  linkedBigIdea?: string;     // big idea or moment it supports
+  shareTrigger: string;       // what people are invited to do
+}
+
+export interface ContentInsight {
+  overview: string;
+  viralityPrinciples: string[];
+  ideas: ViralContentIdea[];  // always 3 or more
+}
+
 export interface MediaStrategyResult {
   personaStrategies: PersonaMediaStrategy[];
   budgetAllocation: BudgetAllocation[];
   tacticalBlueprint: MediaChannelTactic[];
   localNuances: LocalNuance[];
   flightPlan: FlightPlan;
+  // Optional: strategies saved before this section existed don't have it.
+  contentInsight?: ContentInsight;
 }
 
 // Universal structure for step outputs

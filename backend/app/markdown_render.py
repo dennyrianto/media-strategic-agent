@@ -5,7 +5,7 @@ later steps, so the format is kept identical to the original server.ts.
 """
 from __future__ import annotations
 
-from .models import BigIdea, MediaStrategyResult, Moment, PersonaProfile
+from .models import BigIdea, ContentInsight, MediaStrategyResult, Moment, PersonaProfile
 
 
 def _bullets(items: list[str], empty: str = "") -> str:
@@ -95,6 +95,33 @@ def big_ideas_markdown(ideas: list[BigIdea]) -> str:
     return "\n# Strategic Creative Concepts (Big Ideas)\n\n" + "\n---\n".join(blocks) + "\n    "
 
 
+def content_insight_markdown(ci: ContentInsight) -> str:
+    ideas = []
+    for n, idea in enumerate(ci.ideas, 1):
+        ideas.append(f"""
+### {n}. {idea.title}
+{idea.concept}
+
+**Hook**: {idea.hook}
+**Format & Platforms**: {idea.format_and_platforms}
+**Why it can go viral**: {'; '.join(idea.virality_drivers)}
+**Share Trigger**: {idea.share_trigger}
+**For**: {idea.target_persona}{f' | Supports: {idea.linked_big_idea}' if idea.linked_big_idea else ''}
+
+**How to make it**:
+{_bullets(idea.how_to_make)}
+""")
+    return f"""
+## Content Insight: Key Contents of Virality
+{ci.overview}
+
+### Virality Principles
+{_bullets(ci.virality_principles)}
+
+## Viral Content Ideas
+{"".join(ideas)}"""
+
+
 def media_strategy_markdown(s: MediaStrategyResult) -> str:
     persona_blocks = []
     for p in s.persona_strategies:
@@ -149,4 +176,5 @@ def media_strategy_markdown(s: MediaStrategyResult) -> str:
 
 ## Media Targeting
 {targeting}
+{content_insight_markdown(s.content_insight)}
     """

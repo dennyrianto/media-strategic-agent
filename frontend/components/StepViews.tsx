@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { AppStep, MediaBrief, StrategyState, StepResult, PersonaProfile, Moment, BigIdea, MediaStrategyResult } from '../types';
+import { ContentInsightSection } from './ContentInsightSection';
+import { addContentInsightSlides } from './contentInsightSlides';
 import { generateStepContent, analyzeBrief, generatePersonasWithImages, generateMoments, generateBigIdeas, generateMediaStrategy, generateMarketDashboard } from '../services/geminiService';
 
 import { 
@@ -280,7 +282,7 @@ const BriefForm: React.FC<{ brief: MediaBrief; updateBrief: (b: MediaBrief) => v
         ) : (
           <>
             <div className="space-y-3 text-center mb-4">
-              <h2 className="text-4xl font-display font-bold text-slate-900">Brief Ingestion</h2>
+              <h2 className="text-4xl font-kufam font-bold text-slate-900">Brief Ingestion</h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">Upload your media brief or campaign documents to initialize the AI strategy engine.</p>
             </div>
 
@@ -353,7 +355,7 @@ const BriefForm: React.FC<{ brief: MediaBrief; updateBrief: (b: MediaBrief) => v
     <div className="max-w-6xl mx-auto h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-start mb-6">
         <div>
-           <h2 className="text-3xl font-display font-bold text-slate-900 flex items-center gap-3">
+           <h2 className="text-3xl font-kufam font-bold text-slate-900 flex items-center gap-3">
              Brief Interpretation
              {brief.isConfirmed && <CheckCircle2 className="text-emerald-500" size={24} />}
            </h2>
@@ -586,7 +588,7 @@ const MarketIntelligenceView: React.FC<StepViewProps> = ({ step, state, updateRe
     <div className="h-full flex flex-col animate-in fade-in duration-500">
       <div className="mb-6 flex justify-between items-end border-b border-slate-200 pb-6">
         <div>
-          <h2 className="text-3xl font-display font-bold text-slate-900 mb-2">Market Intelligence</h2>
+          <h2 className="text-3xl font-kufam font-bold text-slate-900 mb-2">Market Intelligence</h2>
           <p className="text-slate-600">Deep-dive category analysis and competitive landscape.</p>
         </div>
         <div className="flex gap-3">
@@ -943,7 +945,7 @@ const AudiencePersonaView: React.FC<StepViewProps> = ({ step, state, updateResul
     <div className="h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="mb-6 flex justify-between items-end border-b border-slate-200 pb-6">
             <div>
-                <h2 className="text-3xl font-display font-bold text-slate-900 mb-2">Audience Personas</h2>
+                <h2 className="text-3xl font-kufam font-bold text-slate-900 mb-2">Audience Personas</h2>
                 <p className="text-slate-600">AI-generated target audience profiles with visual representations.</p>
             </div>
             <div className="flex gap-2">
@@ -1108,7 +1110,7 @@ const MomentActivationView: React.FC<StepViewProps> = ({ step, state, updateResu
     <div className="h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="mb-6 flex justify-between items-end border-b border-slate-200 pb-6">
             <div>
-                <h2 className="text-3xl font-display font-bold text-slate-900 mb-2">Moment Activation</h2>
+                <h2 className="text-3xl font-kufam font-bold text-slate-900 mb-2">Moment Activation</h2>
                 <p className="text-slate-600">Identify key cultural and market moments to leverage.</p>
             </div>
             <div className="flex gap-2">
@@ -1262,7 +1264,7 @@ const BigIdeaView: React.FC<StepViewProps> = ({ step, state, updateResult, nextS
     <div className="h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="mb-6 flex justify-between items-end border-b border-slate-200 pb-6">
             <div>
-                <h2 className="text-3xl font-display font-bold text-slate-900 mb-2">Big Idea Generation</h2>
+                <h2 className="text-3xl font-kufam font-bold text-slate-900 mb-2">Big Idea Generation</h2>
                 <p className="text-slate-600">Disruptive creative platforms to drive the campaign.</p>
             </div>
             <div className="flex gap-2">
@@ -1542,6 +1544,9 @@ const MediaStrategyView: React.FC<StepViewProps> = ({ step, state, updateResult,
         fSlide.addTable(flightRows, { x: 0.5, y: 1.5, w: 9, border: { color: 'cbd5e1' } });
     }
 
+    // 6. Content Insight (key contents of virality)
+    addContentInsightSlides(pres, strategy.contentInsight, { primary: COLOR_PRIMARY, accent: COLOR_ACCENT, light: COLOR_BG_LIGHT });
+
     pres.writeFile({ fileName: `${state.brief.brandName}_MediaStrategy_Pro.pptx` });
   };
 
@@ -1564,7 +1569,7 @@ const MediaStrategyView: React.FC<StepViewProps> = ({ step, state, updateResult,
     <div className="h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="mb-6 flex justify-between items-end border-b border-slate-200 pb-6">
             <div>
-                <h2 className="text-3xl font-display font-bold text-slate-900 mb-2">Media Strategy & Approach</h2>
+                <h2 className="text-3xl font-kufam font-bold text-slate-900 mb-2">Media Strategy & Approach</h2>
                 <p className="text-slate-600">Holistic channel planning and tactical blueprints tailored per persona.</p>
             </div>
             <div className="flex gap-2">
@@ -1800,7 +1805,7 @@ const MediaStrategyView: React.FC<StepViewProps> = ({ step, state, updateResult,
 
                     {/* Shared Resources: Budget & Blueprint */}
                     <div className="pt-8 border-t border-slate-200">
-                        <h2 className="text-2xl font-display font-bold text-slate-900 mb-6">Strategic Foundations</h2>
+                        <h2 className="text-2xl font-kufam font-bold text-slate-900 mb-6">Strategic Foundations</h2>
                         
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
@@ -1880,6 +1885,9 @@ const MediaStrategyView: React.FC<StepViewProps> = ({ step, state, updateResult,
                              </div>
                         </div>
                     </div>
+
+                    {/* Content Insight: key contents of virality (bottom of step 6) */}
+                    <ContentInsightSection insight={strategy.contentInsight} />
                 </div>
             )}
         </div>

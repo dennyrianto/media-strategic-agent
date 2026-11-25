@@ -410,7 +410,19 @@ def media_strategy_prompt(req: MediaStrategyRequest) -> str:
       - **Big Ideas**: {big_ideas}
       - **Activation Moments**: {moments}
 
-    #   Recommended media KPI by funnel
-    
-      Return strictly JSON matching the required schema. Ensure flightPlan and targeting are fully populated.
+      **CONTENT INSIGHT (the `contentInsight` field) - KEY CONTENTS OF VIRALITY**:
+      Add a final section on how to create content that has real potential to go viral for this
+      campaign. Base it on everything above: the brief, the personas, the big ideas, the moments,
+      and the media strategy you just defined (channels, funnel roles, flight plan).
+      - `overview`: 2-3 sentences on what makes content spread for THIS brand and audience.
+      - `viralityPrinciples`: 3-5 brand-specific levers (e.g. a particular emotion, cultural
+        reference, participation mechanic, or platform behaviour). No generic advice.
+      - `ideas`: AT LEAST 3 (ideally 4-5) concrete, producible viral content ideas. Each must have a
+        scroll-stopping hook, specific reasons it can spread (viralityDrivers), the format and
+        platforms (chosen from the channels in your tactical blueprint), practical steps to make it
+        (howToMake), the persona it is for, the big idea or moment it supports, and a clear share
+        trigger. Make the ideas clearly different from each other (different formats and emotional
+        triggers), and realistic for the stated budget.
+
+      Return strictly JSON matching the required schema. Ensure flightPlan, targeting and contentInsight are fully populated.
     """

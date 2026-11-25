@@ -107,9 +107,10 @@ async def market_dashboard(body: MarketDashboardRequest, gemini: GeminiService =
 
 # --- 3. step content (search-grounded market intelligence) ---------------
 NOTE_QUOTA = (
-    "> **Note:** Live Google Search was unavailable for this run (quota reached), so this report "
-    "is based on the AI model's general knowledge. Figures are approximate and unverified. "
-    "Re-generate later for a search-grounded version.\n\n"
+    "> **Note:** Live Google Search was unavailable for this run (Google returned a quota error - "
+    "search is usually not included with free-tier API keys, and paid keys have a monthly cap). "
+    "This report is based on the AI model's general knowledge; figures are approximate and "
+    "unverified. See the README troubleshooting section to enable search.\n\n"
 )
 NOTE_OFF = (
     "> **Note:** Live Google Search is turned off (`SEARCH_GROUNDING=off`), so this report is "
@@ -130,13 +131,22 @@ async def step_content(
     is_market_step = body.step == prompts.STEP_MARKET_INTELLIGENCE
 
     try:
-        text = await gemini.generate_text(prompt, grounded=wants_search, empty_fallback=fallback)
+        text = await gemini.generate_text(
+            prompt,
+            grounded=wants_search,
+            model=settings.gemini_model_search if wants_search else None,
+            empty_fallback=fallback,
+        )
     except GeminiError as exc:
         # Search grounding has its own quota. If only that is exhausted, still give
         # the user a report - clearly labelled - instead of blocking the whole workflow.
         if not (wants_search and mode == "auto" and exc.status == 429):
             raise
-        log.warning("Search grounding quota reached; falling back to no-search report.")
+        log.warning(
+            "Google rejected search grounding for model %s: %s - falling back to a no-search report.",
+            settings.gemini_model_search or settings.gemini_model_text,
+            exc.message,
+        )
         prompt, _ = prompts.step_content_prompt(*args, search=False)
         text = await gemini.generate_text(prompt, grounded=False, empty_fallback=fallback)
         return StepContentResponse(text=NOTE_QUOTA + text)
@@ -198,7 +208,9 @@ async def big_ideas(body: BigIdeasRequest, gemini: GeminiService = Depends(get_g
 # --- 7. media strategy ----------------------------------------------------
 @router.post("/gemini/media-strategy", response_model=MediaStrategyResponse, response_model_by_alias=True)
 async def media_strategy(body: MediaStrategyRequest, gemini: GeminiService = Depends(get_gemini)):
+    # Larger output than the other steps (it now includes Content Insight), and a
+    # truncated nested object cannot be recovered, so allow extra headroom.
     strategy: MediaStrategyResult = await gemini.generate_json(
-        prompts.media_strategy_prompt(body), MediaStrategyResult
+        prompts.media_strategy_prompt(body), MediaStrategyResult, max_output_tokens=16384
     )
     return MediaStrategyResponse(text=md.media_strategy_markdown(strategy), strategy=strategy)

@@ -279,12 +279,49 @@ class FlightPlan(CamelModel):
     channels: list[ChannelFlight]
 
 
+class ViralContentIdea(CamelModel):
+    title: str = Field(description="Working title of the content idea")
+    concept: str = Field(description="What the content is, in 1-2 sentences")
+    hook: str = Field(description="The opening 1-3 seconds / first line that stops the scroll")
+    virality_drivers: list[str] = Field(
+        description="2-4 specific reasons people will share or engage "
+        "(emotion, relatability, participation, status, humour, surprise...)"
+    )
+    format_and_platforms: str = Field(
+        description="Format and the best platforms, tied to the channels in the media strategy"
+    )
+    how_to_make: list[str] = Field(
+        description="3-5 concrete production steps a team can follow to make it"
+    )
+    target_persona: str = Field(description="Name of the persona this is built for")
+    linked_big_idea: str = Field(default="", description="Big idea or moment it supports")
+    share_trigger: str = Field(
+        description="The participation or sharing mechanic: what people are invited to do"
+    )
+
+
+class ContentInsight(CamelModel):
+    """Key contents of virality for this campaign."""
+
+    overview: str = Field(
+        description="2-3 sentences: what makes content spread for this brand and audience"
+    )
+    virality_principles: list[str] = Field(
+        min_length=3,
+        description="3-5 brand-specific levers that make content go viral (not generic advice)",
+    )
+    ideas: list[ViralContentIdea] = Field(
+        min_length=3, description="At least 3 distinct viral content ideas"
+    )
+
+
 class MediaStrategyResult(CamelModel):
     persona_strategies: list[PersonaMediaStrategy]
     budget_allocation: list[BudgetAllocation]
     tactical_blueprint: list[MediaChannelTactic]
     local_nuances: list[LocalNuance]
     flight_plan: FlightPlan
+    content_insight: ContentInsight
 
 
 # --------------------------------------------------------------------------
